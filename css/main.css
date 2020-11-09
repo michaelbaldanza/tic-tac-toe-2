@@ -1,0 +1,15 @@
+.square {
+  min-width: 125px;
+  min-height: 125px;
+  border: solid 1.5px black;
+}
+
+#top-row, #center-row, #bottom-row {
+  display: flex;
+}
+
+#page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
