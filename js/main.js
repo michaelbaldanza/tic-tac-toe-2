@@ -1,11 +1,12 @@
 /*----- constants -----*/
-
+const xWins = 'XXX';
+const oWins = 'OOO';
 
 /*----- app's state (variables) -----*/
 let board = [
-  [[''],[''],['']],
-  [[''],[''],['']],
-  [[''],[''],['']],
+  ['top-left', 'top-middle', 'top-right'],
+  ['center-left', 'center-middle', 'center-right'],
+  ['bottom-left', 'bottom-middle', 'bottom-right'],
 ];
 
 let currentPlayer = 'X';
@@ -40,8 +41,10 @@ bottomRightEl.addEventListener('click', takeTurn);
 /*----- functions -----*/
 function takeTurn(evt) {
   evt.target.textContent = currentPlayer;
+  updateBoard(evt.target.id);
   turn *= -1;
   changePlayer();
+  evt.target.removeEventListener('click', takeTurn);
 }
 
 function changePlayer() {
@@ -50,5 +53,16 @@ function changePlayer() {
   }
   if (turn === -1) {
     currentPlayer = 'O';
+  }
+}
+
+function updateBoard(info) {
+  for (x = 0; x < board.length; x++) {
+    for (y = 0; y < board[x].length; y++) {
+      if (board[x][y] === info) {
+        console.log(board[x][y]);
+        board[x][y] = currentPlayer;
+      }
+    }
   }
 }
