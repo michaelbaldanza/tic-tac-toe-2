@@ -13,6 +13,8 @@ let currentPlayer = 'X';
 
 let turn = 1;
 
+let turnCounter = 0;
+
 let winner = '';
 
 /*----- cached element references -----*/
@@ -40,14 +42,15 @@ bottomRightEl.addEventListener('click', takeTurn);
 
 /*----- functions -----*/
 function takeTurn(evt) {
-  evt.target.textContent = currentPlayer;
-  updateBoard(evt.target.id);
-  turn *= -1;
+  const selectedSquare = evt.target;
+  updateBoard(selectedSquare.id);
+  updateView(selectedSquare);
   changePlayer();
-  evt.target.removeEventListener('click', takeTurn);
+  console.log(board);
 }
 
 function changePlayer() {
+  turn *= -1;
   if (turn === 1) {
     currentPlayer = 'X';
   }
@@ -56,13 +59,18 @@ function changePlayer() {
   }
 }
 
-function updateBoard(info) {
+function updateBoard(square) {
   for (x = 0; x < board.length; x++) {
     for (y = 0; y < board[x].length; y++) {
-      if (board[x][y] === info) {
+      if (board[x][y] === square) {
         console.log(board[x][y]);
         board[x][y] = currentPlayer;
       }
     }
   }
+}
+
+function updateView(square) {
+  square.textContent = currentPlayer;
+  square.removeEventListener('click', takeTurn);
 }
