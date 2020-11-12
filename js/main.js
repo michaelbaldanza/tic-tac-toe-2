@@ -47,12 +47,11 @@ resetBtn.addEventListener('click', reset);
 /*----- functions -----*/
 function takeTurn(evt) {
   turnCounter += 0.5;
-  console.log(turnCounter);
   const selectedSquare = evt.target;
   updateBoard(selectedSquare.id);
+  checkWinningCondition();
   updateView(selectedSquare);
   changePlayer();
-  console.log(board);
 }
 
 function changePlayer() {
@@ -71,10 +70,28 @@ function updateBoard(square) {
   for (x = 0; x < board.length; x++) {
     for (y = 0; y < board[x].length; y++) {
       if (board[x][y] === square) {
-        console.log(board[x][y]);
         board[x][y] = currentPlayer;
       }
     }
+  }
+}
+
+function checkWinningCondition() {
+  console.log(board[0][0], board[0][1], board[0][2]);
+  if (
+    // horizontal
+    board[0][0] === board[0][1] && board[0][1] === board[0][2] ||
+    board[1][0] === board[1][1] && board[1][1] === board[1][2] ||
+    board[2][0] === board[2][1] && board[2][1] === board[2][2] ||
+    // vertical
+    board[0][0] === board[1][0] && board[1][0] === board[2][0] ||
+    board[0][1] === board[1][1] && board[1][1] === board[2][1] ||
+    board[0][2] === board[1][2] && board[1][2] === board[2][2] ||
+    // diagonal
+    board[0][0] === board[1][1] && board[1][1] === board[2][2] ||
+    board[0][2] === board[1][1] && board[1][1] === board[2][0]
+  ) {
+    winner = currentPlayer
   }
 }
 
@@ -82,11 +99,14 @@ function updateView(square) {
   square.textContent = currentPlayer;
   square.removeEventListener('click', takeTurn);
   square.setAttribute('listener', 'false');
+  if (winner === currentPlayer){
+    messageEl.textContent = `${currentPlayer} WINS`;
+    return;
+  }
   messageEl.textContent = `${prevPlayer} TAKE YOUR TURN`;
 }
 
 function reset() {
-  console.log('hit reset');
   board = [
     ['top-left', 'top-middle', 'top-right'],
     ['center-left', 'center-middle', 'center-right'],
@@ -103,9 +123,7 @@ function reset() {
 }
 
 function eventListenerReset() {
-  console.log('hit event listener reset');
   if (topLeftEl.getAttribute('listener') !== 'true') {
-    
     topLeftEl.addEventListener('click', takeTurn);
     topLeftEl.setAttribute('listener','true');
   }
