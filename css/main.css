@@ -37,3 +37,8 @@ button {
   color: #F9B9B7;
   border-radius: 5px;
 }
+
+#messages {
+  display: flex;
+  flex-direction: space-between;
+}
