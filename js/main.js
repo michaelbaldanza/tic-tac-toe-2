@@ -92,6 +92,7 @@ function checkWinningCondition() {
     board[0][2] === board[1][1] && board[1][1] === board[2][0]
   ) {
     winner = currentPlayer
+    rmvEvtListeners();
   }
 }
 
@@ -171,4 +172,16 @@ function boardReset() {
   bottomLeftEl.textContent = '';
   bottomMiddleEl.textContent = '';
   bottomRightEl.textContent = '';
+}
+
+function rmvEvtListeners() {
+  topLeftEl.removeEventListener('click', takeTurn);
+  topMiddleEl.removeEventListener('click', takeTurn);
+  topRightEl.removeEventListener('click', takeTurn);
+  centerLeftEl.removeEventListener('click', takeTurn);
+  centerMiddleEl.removeEventListener('click', takeTurn);
+  centerRightEl.removeEventListener('click', takeTurn);
+  bottomLeftEl.removeEventListener('click', takeTurn);
+  bottomMiddleEl.removeEventListener('click', takeTurn);
+  bottomRightEl.removeEventListener('click', takeTurn);
 }
