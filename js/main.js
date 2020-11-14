@@ -184,4 +184,14 @@ function rmvEvtListeners() {
   bottomLeftEl.removeEventListener('click', takeTurn);
   bottomMiddleEl.removeEventListener('click', takeTurn);
   bottomRightEl.removeEventListener('click', takeTurn);
+
+  topLeftEl.setAttribute('listener','false');
+  topMiddleEl.setAttribute('listener','false');
+  topRightEl.setAttribute('listener','false');
+  centerLeftEl.setAttribute('listener','false');
+  centerMiddleEl.setAttribute('listener','false');
+  centerRightEl.setAttribute('listener','false');
+  bottomLeftEl.setAttribute('listener','false');
+  bottomMiddleEl.setAttribute('listener','false');
+  bottomRightEl.setAttribute('listener','false');
 }
