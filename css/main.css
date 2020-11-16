@@ -40,5 +40,13 @@ button {
 
 #messages {
   display: flex;
-  flex-direction: space-between;
+  justify-content: space-between;
+}
+
+#scoreboard {
+  display: flex;
+}
+
+.score-container {
+  margin: 10px;
 }

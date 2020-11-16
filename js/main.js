@@ -1,6 +1,4 @@
 /*----- constants -----*/
-const xWins = 'XXX';
-const oWins = 'OOO';
 
 /*----- app's state (variables) -----*/
 let board = [
@@ -17,6 +15,9 @@ let turnCounter = 1;
 
 let winner = '';
 
+let xScore = 0;
+let oScore = 0;
+
 /*----- cached element references -----*/
 const topLeftEl = document.getElementById('top-left');
 const topMiddleEl = document.getElementById('top-middle');
@@ -30,6 +31,9 @@ const bottomRightEl = document.getElementById('bottom-right');
 
 const messageEl = document.getElementById('message');
 const resetBtn = document.getElementById('reset-btn');
+
+const xScoreEl = document.getElementById('x-score');
+const oScoreEl = document.getElementById('o-score');
 
 /*----- event listeners -----*/
 topLeftEl.addEventListener('click', takeTurn);
@@ -77,7 +81,6 @@ function updateBoard(square) {
 }
 
 function checkWinningCondition() {
-  console.log(board[0][0], board[0][1], board[0][2]);
   if (
     // horizontal
     board[0][0] === board[0][1] && board[0][1] === board[0][2] ||
@@ -92,6 +95,12 @@ function checkWinningCondition() {
     board[0][2] === board[1][1] && board[1][1] === board[2][0]
   ) {
     winner = currentPlayer
+    if (winner === 'X') {
+      xScore += 1;
+    }
+    if (winner === 'O') {
+      oScore += 1;
+    }
     rmvEvtListeners();
   }
 }
@@ -102,6 +111,12 @@ function updateView(square) {
   square.setAttribute('listener', 'false');
   if (winner === currentPlayer){
     messageEl.textContent = `${currentPlayer} WINS`;
+    if (winner === 'X') {
+      xScoreEl.textContent = `${xScore}`;
+    }
+    if (winner === 'O') {
+      oScoreEl.textContent = `${oScore}`;
+    }
     return;
   }
   messageEl.textContent = `${prevPlayer} TAKE YOUR TURN`;
