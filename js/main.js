@@ -54,6 +54,7 @@ function takeTurn(evt) {
   const selectedSquare = evt.target;
   updateBoard(selectedSquare.id);
   checkWinningCondition();
+  checkTieCondition();
   updateView(selectedSquare);
   changePlayer();
 }
@@ -117,6 +118,10 @@ function updateView(square) {
     if (winner === 'O') {
       oScoreEl.textContent = `${oScore}`;
     }
+    return;
+  }
+  if (winner === 'none') {
+    messageEl.textContent = `CAT'S GAME`;
     return;
   }
   messageEl.textContent = `${prevPlayer} TAKE YOUR TURN`;
@@ -209,4 +214,18 @@ function rmvEvtListeners() {
   bottomLeftEl.setAttribute('listener','false');
   bottomMiddleEl.setAttribute('listener','false');
   bottomRightEl.setAttribute('listener','false');
+}
+
+function checkTieCondition() {
+  let fullBoard = 0;
+  board.forEach(function (row) {
+    row.forEach(function (square) {
+      if (square === 'X' || square === 'O') {
+        fullBoard += 1;
+      }
+    });
+  });
+  if (fullBoard === 9) {
+    winner = 'none'
+  }
 }
