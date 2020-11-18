@@ -41,6 +41,7 @@ button {
 #messages {
   display: flex;
   justify-content: space-between;
+  min-width: 375px;
 }
 
 #scoreboard {

@@ -226,6 +226,6 @@ function checkTieCondition() {
     });
   });
   if (fullBoard === 9) {
-    winner = 'none'
+    winner = 'none';
   }
 }
