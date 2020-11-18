@@ -38,6 +38,11 @@ button {
   border-radius: 5px;
 }
 
+button:active {
+  background: #5A0926;
+  color: #8F100C;
+}
+
 #messages {
   display: flex;
   justify-content: space-between;
@@ -46,8 +51,28 @@ button {
 
 #scoreboard {
   display: flex;
+  justify-content: space-around;
+  min-width: 125px;
+  min-height: 50px;
+}
+
+.score-header {
+  text-decoration: underline;
+  font-size: 24px;
+}
+
+#x-score {
+  min-width: 15.19px;
+  min-height: 19px;
+  padding-left: 3px;
+}
+
+#o-score {
+  min-width: 16.58px;
+  min-height: 19px;
+  padding-left: 3.75px;
 }
 
 .score-container {
-  margin: 10px;
+  /* margin: 10px; */
 }
