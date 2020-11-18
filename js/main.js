@@ -7,11 +7,10 @@ let board = [
   ['bottom-left', 'bottom-middle', 'bottom-right'],
 ];
 
-let currentPlayer = 'X';
-let prevPlayer = 'O';
+let currentPlayer = '';
+let prevPlayer = '';
 
-let turn = 1;
-let turnCounter = 1;
+let turn = 0;
 
 let winner = '';
 
@@ -49,8 +48,16 @@ bottomRightEl.addEventListener('click', takeTurn);
 resetBtn.addEventListener('click', reset);
 
 /*----- functions -----*/
+function setup() {
+  currentPlayer = 'X';
+  prevPlayer = 'O';
+  turn = 1;
+  xScoreEl.textContent = xScore;
+  oScoreEl.textContent = oScore;
+  messageEl.textContent = 'X GOES FIRST';
+}
+
 function takeTurn(evt) {
-  turnCounter += 0.5;
   const selectedSquare = evt.target;
   updateBoard(selectedSquare.id);
   checkWinningCondition();
@@ -136,7 +143,6 @@ function reset() {
   currentPlayer = 'X';
   prevPlayer = 'O';
   turn = 1;
-  turnCounter = 1;
   winner = '';
   messageEl.textContent = 'X GOES FIRST';
   eventListenerReset();
@@ -229,3 +235,5 @@ function checkTieCondition() {
     winner = 'none';
   }
 }
+
+setup();
