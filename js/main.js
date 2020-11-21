@@ -41,24 +41,32 @@ resetBtn.addEventListener('click', reset);
 
 /*----- functions -----*/
 
-setup();
+init();
 
-function setup() {
+function init() {
+  // initialize state
   currentPlayer = 'X';
   prevPlayer = 'O';
-  turn = 1;
+  turn = -1;
+  // initialize view
   xScoreEl.textContent = xScore;
   oScoreEl.textContent = oScore;
   messageEl.textContent = 'X GOES FIRST';
 }
 
+
+
 function takeTurn(evt) {
   const selectedSquare = evt.target;
-  updateBoard(selectedSquare.id);
+  updateState(selectedSquare.id);
+  render(selectedSquare);
+}
+
+function updateState(square) {
+  changePlayer();
+  updateBoard(square);
   checkWinningCondition();
   checkTieCondition();
-  updateView(selectedSquare);
-  changePlayer();
 }
 
 function changePlayer() {
@@ -104,70 +112,7 @@ function checkWinningCondition() {
     if (winner === 'O') {
       oScore += 1;
     }
-    rmvEvtListeners();
   }
-}
-
-function updateView(square) {
-  square.textContent = currentPlayer;
-  square.removeEventListener('click', takeTurn);
-  square.setAttribute('listener', 'false');
-  if (winner === currentPlayer){
-    messageEl.textContent = `${currentPlayer} WINS`;
-    if (winner === 'X') {
-      xScoreEl.textContent = `${xScore}`;
-    }
-    if (winner === 'O') {
-      oScoreEl.textContent = `${oScore}`;
-    }
-    return;
-  }
-  if (winner === 'none') {
-    messageEl.textContent = `CAT'S GAME`;
-    return;
-  }
-  messageEl.textContent = `${prevPlayer} TAKE YOUR TURN`;
-}
-
-function reset() {
-  board = [
-    ['top-left', 'top-middle', 'top-right'],
-    ['center-left', 'center-middle', 'center-right'],
-    ['bottom-left', 'bottom-middle', 'bottom-right'],
-  ];
-  currentPlayer = 'X';
-  prevPlayer = 'O';
-  turn = 1;
-  winner = '';
-  messageEl.textContent = 'X GOES FIRST';
-  eventListenerReset();
-  boardReset();
-}
-
-function eventListenerReset() {
-  // add event listeners back
-  squareEls.forEach(function(squareEl) {
-    if (squareEl.getAttribute('listener') !== 'true') {
-      squareEl.addEventListener('click', takeTurn);
-      squareEl.setAttribute('listener', 'true');
-    }
-  });
-}
-
-function boardReset() {
-  // clear X's and O's from the board
-  squareEls.forEach(function(squareEl) {
-    squareEl.textContent = '';
-  });
-}
-
-function rmvEvtListeners() {
-  squareEls.forEach(function(squareEl) {
-    squareEl.removeEventListener('click', takeTurn);
-  });
-  squareEls.forEach(function(squareEl) {
-    squareEl.setAttribute('listener', 'false');
-  });
 }
 
 function checkTieCondition() {
@@ -183,4 +128,77 @@ function checkTieCondition() {
   if (fullBoard === 9) {
     winner = 'none';
   }
+}
+
+function render(square) {
+  square.textContent = currentPlayer;
+  square.removeEventListener('click', takeTurn);
+  square.setAttribute('listener', 'false');
+  winner !== '' ?
+    endGame() : messageEl.textContent = `${prevPlayer} TAKE YOUR TURN`;
+}
+
+function endGame() {
+  removeEventListeners();
+  displayOutcome();
+}
+
+function removeEventListeners() {
+  squareEls.forEach(function(squareEl) {
+    squareEl.removeEventListener('click', takeTurn);
+  });
+  squareEls.forEach(function(squareEl) {
+    squareEl.setAttribute('listener', 'false');
+  });
+}
+
+function displayOutcome() {
+  if (winner === currentPlayer){
+    messageEl.textContent = `${currentPlayer} WINS`;
+    if (winner === 'X') {
+      xScoreEl.textContent = `${xScore}`;
+    }
+    if (winner === 'O') {
+      oScoreEl.textContent = `${oScore}`;
+    }
+    return;
+  }
+  if (winner === 'none') {
+    messageEl.textContent = `CAT'S GAME`;
+    return;
+  }
+};
+
+function reset() {
+  // reset state
+  board = [
+    ['top-left', 'top-middle', 'top-right'],
+    ['center-left', 'center-middle', 'center-right'],
+    ['bottom-left', 'bottom-middle', 'bottom-right'],
+  ];
+  currentPlayer = 'X';
+  prevPlayer = 'O';
+  turn = -1;
+  winner = '';
+  // reset view
+  messageEl.textContent = 'X GOES FIRST';
+  resetEventListeners();
+  resetSquareEls();
+}
+
+function resetEventListeners() {
+  // add event listeners back
+  squareEls.forEach(function(squareEl) {
+    if (squareEl.getAttribute('listener') !== 'true') {
+      squareEl.addEventListener('click', takeTurn);
+      squareEl.setAttribute('listener', 'true');
+    }
+  });
+}
+
+function resetSquareEls() {
+  // clear X's and O's from the board
+  squareEls.forEach(function(squareEl) {
+    squareEl.textContent = '';
+  });
 }
