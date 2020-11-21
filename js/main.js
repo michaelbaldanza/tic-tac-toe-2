@@ -1,6 +1,5 @@
-/*----- constants -----*/
-
 /*----- app's state (variables) -----*/
+
 let board = [
   ['top-left', 'top-middle', 'top-right'],
   ['center-left', 'center-middle', 'center-right'],
@@ -17,6 +16,7 @@ let winner = '';
 let xScore = 0;
 let oScore = 0;
 
+
 /*----- cached element references -----*/
 
 // get array of board squares
@@ -28,6 +28,7 @@ const messageEl = document.getElementById('message');
 const xScoreEl = document.getElementById('x-score');
 const oScoreEl = document.getElementById('o-score');
 
+
 /*----- event listeners -----*/
 
 // add event listeners to squares
@@ -37,7 +38,11 @@ squareEls.forEach(function (squareEl) {
 
 resetBtn.addEventListener('click', reset);
 
+
 /*----- functions -----*/
+
+setup();
+
 function setup() {
   currentPlayer = 'X';
   prevPlayer = 'O';
@@ -166,6 +171,7 @@ function rmvEvtListeners() {
 }
 
 function checkTieCondition() {
+  if (winner !== '') return;
   let fullBoard = 0;
   board.forEach(function (row) {
     row.forEach(function (square) {
@@ -178,5 +184,3 @@ function checkTieCondition() {
     winner = 'none';
   }
 }
-
-setup();
